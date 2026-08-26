@@ -181,6 +181,11 @@
   .arc-banner .kanji{ font-family:var(--font-display); font-size:3rem; line-height:1; font-weight:700; }
   .arc-banner .titles h2{ font-family:var(--font-display); font-weight:700; font-size:1.9rem; letter-spacing:0.03em; margin:0 0 4px; text-transform:uppercase; }
   .arc-banner .titles p{ margin:0; color:var(--gray); font-size:0.92rem; max-width:520px; }
+  .arc-banner .titles p.technique-name{
+    font-family:var(--font-mono); font-size:0.85rem; letter-spacing:0.06em; margin:2px 0 8px; max-width:none;
+  }
+  .arc[data-section-state="shikai"] .technique-name{ color:var(--cyan); text-shadow:0 0 14px rgba(0,229,255,0.4); }
+  .arc[data-section-state="bankai"] .technique-name{ color:var(--lime); text-shadow:0 0 16px rgba(174,234,0,0.45); }
   .arc[data-section-state="neutral"] .arc-banner .kanji{ color:var(--graphite-light); }
   .arc[data-section-state="shikai"] .arc-banner .kanji{ color:var(--cyan); text-shadow:0 0 24px rgba(0,229,255,0.5); }
   .arc[data-section-state="bankai"] .arc-banner .kanji{ color:var(--lime); text-shadow:0 0 30px rgba(174,234,0,0.6); }
@@ -357,7 +362,7 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow">infra analyst → cloud analyst // shikai · bankai · o caminho da lâmina</div>
-    <h1>BANKAI.CLOUD</h1>
+    <h1>BANKAI.ライム</h1>
     <p class="sub">Cada fase do roadmap é um estado da lâmina: <b style="color:var(--white)">repouso</b>, <b style="color:var(--white)">liberação (shikai)</b> e <b style="color:var(--white)">virada decisiva (bankai)</b>. Role a página — o cenário muda com você.</p>
     <div class="meta-row">
       <span class="pill"><b>12</b> módulos</span>
@@ -532,8 +537,8 @@ const MODULES = [
 
 const SECTIONS = [
   { id:"neutral-1", state:"neutral", kanji:"序", title:"Fundamentos", subtitle:"Antes do primeiro corte. A base que sustenta a lâmina.", range:[0,1] },
-  { id:"shikai",    state:"shikai",  kanji:"解", title:"Shikai — Consolidação", subtitle:"Liberte a lâmina. A fase em que ela corta o dia a dia.", range:[2,8] },
-  { id:"bankai",    state:"bankai",  kanji:"嵐", title:"Bankai — A Virada", subtitle:"O momento decisivo: o salto pra Cloud vira real.", range:[9,9] },
+  { id:"shikai",    state:"shikai",  kanji:"解", title:"Shikai — Consolidação", technique:"令線 (Reisen)", subtitle:"Liberte a lâmina. A fase em que ela corta o dia a dia.", range:[2,8] },
+  { id:"bankai",    state:"bankai",  kanji:"嵐", title:"Bankai — A Virada", technique:"雷雲令圏 (Raiun Reiken)", subtitle:"O momento decisivo: o salto pra Cloud vira real.", range:[9,9] },
   { id:"neutral-2", state:"neutral", kanji:"余", title:"Horizonte", subtitle:"Depois da tempestade. Caminhos opcionais, no seu ritmo.", range:[10,11] }
 ];
 
@@ -562,7 +567,11 @@ SECTIONS.forEach(section => {
   banner.className = 'arc-banner';
   banner.innerHTML = `
     <span class="kanji">${section.kanji}</span>
-    <div class="titles"><h2>${section.title}</h2><p>${section.subtitle}</p></div>
+    <div class="titles">
+      <h2>${section.title}</h2>
+      ${section.technique ? `<p class="technique-name">${section.technique}</p>` : ''}
+      <p>${section.subtitle}</p>
+    </div>
     <div class="line"></div>`;
   arc.appendChild(banner);
 
