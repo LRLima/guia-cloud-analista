@@ -1,316 +1,355 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-active-state="neutral">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>始 // Guia de Estudos — Rumo a Cloud</title>
-<meta name="description" content="Roadmap de estudos para transição de carreira Infra → Cloud Analyst.">
+<title>卍解 // Guia de Estudos — Rumo a Cloud</title>
+<meta name="description" content="Roadmap de estudos para transição de carreira Infra → Cloud Analyst, narrado em 3 estados: Neutro, Shikai e Bankai.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#07090b;
-    --bg-soft:#0d1215;
-    --bg-card:#0f1518;
-    --bg-card-hover:#121a1e;
-    --line: rgba(255,255,255,0.08);
-    --teal:#19e8cf;
-    --teal-dim:#0d8f80;
-    --teal-glow: rgba(25,232,207,0.35);
-    --red:#ff3b4e;
-    --red-dim:#8c1524;
-    --red-glow: rgba(255,59,78,0.35);
-    --white:#f2f6f6;
-    --gray:#8b9a9c;
-    --gray-dim:#5c686a;
-    --font-display: 'Bebas Neue', 'Space Grotesk', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
+    --chrome-bg:#07090a;
+    --chrome-line: rgba(255,255,255,0.08);
+    --ink:#0a0b0c;
+    --white:#f1efe9;
+    --gray:#9a978f;
+    --gray-dim:#5c5a54;
 
+    /* copper / shikai */
+    --copper-dark:#5c3a1e;
+    --copper:#b87333;
+    --copper-light:#d98e4a;
+    --cyan:#00e5ff;
+    --cyan-dim:#0a6e78;
+
+    /* neutral / graphite */
+    --graphite-dark:#1c1e1f;
+    --graphite:#3a3d40;
+    --graphite-light:#7d8286;
+
+    /* bankai / storm */
+    --lime:#aeea00;
+    --lime-dim:#5e7a0a;
+    --storm-gray:#54585b;
+    --storm-black:#050605;
+
+    --font-display:'Rajdhani', 'Space Grotesk', sans-serif;
+    --font-body:'Space Grotesk', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
   *{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
+  html{ scroll-behavior:smooth; background:var(--ink); }
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--white);
-    font-family:var(--font-body);
-    overflow-x:hidden;
-    position:relative;
+    margin:0; background:var(--ink); color:var(--white);
+    font-family:var(--font-body); overflow-x:hidden; position:relative;
+  }
+  a{ color:var(--copper-light); }
+  ::selection{ background:var(--copper); color:#000; }
+
+  /* ============ GRAIN TEXTURE (industrial roughness) ============ */
+  .grain{
+    position:fixed; inset:0; z-index:5; pointer-events:none;
+    opacity:0.05; mix-blend-mode:overlay;
   }
 
-  /* ---------- animated background ---------- */
-  .bg-fx{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
+  /* ============ BACKGROUND STATE LAYERS ============ */
+  .bg-stack{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .bg-layer{
+    position:absolute; inset:-5%; opacity:0; transition: opacity 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  html[data-active-state="neutral"] .bg-layer.is-neutral{ opacity:1; }
+  html[data-active-state="shikai"]  .bg-layer.is-shikai{ opacity:1; }
+  html[data-active-state="bankai"]  .bg-layer.is-bankai{ opacity:1; }
+
+  /* --- neutral: quiet graphite --- */
+  .bg-layer.is-neutral{
     background:
-      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(25,232,207,0.10), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 90% 10%, rgba(255,59,78,0.09), transparent 60%),
-      linear-gradient(var(--bg), var(--bg));
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(120,120,120,0.08), transparent 65%),
+      linear-gradient(180deg, var(--graphite-dark), var(--ink) 60%);
   }
-  .bg-grid{
-    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.35;
-    background-image:
-      linear-gradient(rgba(25,232,207,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(25,232,207,0.06) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 10%, transparent 75%);
-  }
-  .spirit{
-    position:fixed; z-index:0; pointer-events:none; border-radius:50%;
-    filter: blur(1px);
-    animation: drift linear infinite;
-    opacity:0.55;
-  }
-  @keyframes drift{
-    0%{ transform: translateY(0) translateX(0); opacity:0; }
-    10%{ opacity:0.6; }
-    90%{ opacity:0.5; }
-    100%{ transform: translateY(-120vh) translateX(30px); opacity:0; }
-  }
+  .bg-layer.is-neutral .wire-svg{ opacity:0.14; animation: driftSlow 60s linear infinite; }
 
-  /* ---------- layout helpers ---------- */
-  .wrap{ max-width:1100px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
-  a{ color:var(--teal); }
+  /* --- shikai: copper + cyan energy --- */
+  .bg-layer.is-shikai{
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 10%, rgba(184,115,51,0.16), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 30%, rgba(0,229,255,0.08), transparent 60%),
+      linear-gradient(180deg, #140d08, var(--ink) 65%);
+  }
+  .bg-layer.is-shikai .wire-svg{ opacity:0.32; animation: driftMid 34s linear infinite; }
 
-  /* ---------- sticky progress header ---------- */
+  /* --- bankai: storm --- */
+  .bg-layer.is-bankai{
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 0%, rgba(174,234,0,0.14), transparent 55%),
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(84,88,91,0.25), transparent 60%),
+      linear-gradient(180deg, #0c1006, var(--storm-black) 70%);
+  }
+  .cloud{
+    position:absolute; border-radius:50%; filter:blur(60px); opacity:0.5;
+    animation: cloudDrift 22s ease-in-out infinite alternate;
+  }
+  .cloud.c1{ width:60vw; height:40vh; left:-10%; top:-10%; background:radial-gradient(circle, rgba(174,234,0,0.25), transparent 70%); animation-duration:26s; }
+  .cloud.c2{ width:50vw; height:45vh; right:-15%; top:10%; background:radial-gradient(circle, rgba(84,88,91,0.4), transparent 70%); animation-duration:31s; }
+  .cloud.c3{ width:70vw; height:50vh; left:20%; bottom:-20%; background:radial-gradient(circle, rgba(5,6,5,0.6), transparent 70%); animation-duration:19s; }
+  @keyframes cloudDrift{ from{ transform:translate(0,0) scale(1); } to{ transform:translate(4%,-3%) scale(1.08); } }
+
+  .bolt{ position:absolute; opacity:0; filter:drop-shadow(0 0 8px var(--lime)); }
+  .bolt.flash{ animation: boltFlash 0.5s ease-out; }
+  @keyframes boltFlash{ 0%{opacity:0;} 8%{opacity:1;} 16%{opacity:0.2;} 24%{opacity:0.9;} 40%{opacity:0;} 100%{opacity:0;} }
+
+  @keyframes driftSlow{ from{ transform:translate(0,0); } to{ transform:translate(-4%,-2%); } }
+  @keyframes driftMid{ from{ transform:translate(0,0); } to{ transform:translate(-6%,3%); } }
+
+  /* --- foreground wire: cinematic rack-focus element (shikai) --- */
+  .wire-foreground{
+    position:fixed; inset:-10%; z-index:1; pointer-events:none;
+    opacity:0; filter:blur(14px); transform:scale(1.15);
+    transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s ease;
+  }
+  .wire-foreground.active{ opacity:0.55; filter:blur(1.5px); transform:scale(1.02); }
+  html[data-active-state="bankai"] .wire-foreground{ opacity:0 !important; }
+
+  .particles-canvas{ position:fixed; inset:0; z-index:2; pointer-events:none; }
+
+  /* ============ LAYOUT HELPERS ============ */
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 24px; position:relative; z-index:3; }
+
+  /* ============ TOPBAR (fixed chrome, state-independent) ============ */
   .topbar{
     position:sticky; top:0; z-index:50;
     backdrop-filter: blur(14px) saturate(140%);
-    background: rgba(7,9,11,0.72);
-    border-bottom:1px solid var(--line);
+    background: rgba(7,9,10,0.78);
+    border-bottom:1px solid var(--chrome-line);
   }
   .topbar-inner{
     max-width:1100px; margin:0 auto; padding:14px 24px;
     display:flex; align-items:center; justify-content:space-between; gap:20px;
   }
-  .brand{
-    font-family:var(--font-display); letter-spacing:0.08em; font-size:1.15rem;
-    display:flex; align-items:center; gap:10px; white-space:nowrap;
-  }
-  .brand .kanji{ color:var(--red); font-family:var(--font-display); }
-  .brand .kanji2{ color:var(--teal); }
-  .progress-mini{
-    flex:1; max-width:360px; display:flex; align-items:center; gap:12px;
-  }
-  .progress-track{
-    flex:1; height:8px; border-radius:99px; background:rgba(255,255,255,0.07);
-    overflow:hidden; position:relative; border:1px solid var(--line);
-  }
-  .progress-fill{
-    height:100%; width:0%; border-radius:99px;
-    background: linear-gradient(90deg, var(--teal), var(--red));
-    transition: width 0.6s cubic-bezier(.16,1,.3,1);
-    position:relative;
-  }
-  .progress-fill::after{
-    content:''; position:absolute; inset:0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    width:40px; animation: shine 2.4s ease-in-out infinite;
-  }
-  @keyframes shine{ 0%{ transform:translateX(-60px);} 100%{ transform:translateX(320px);} }
-  .progress-pct{ font-family:var(--font-mono); font-size:0.85rem; color:var(--teal); min-width:42px; text-align:right; }
+  .brand{ font-family:var(--font-display); font-weight:700; letter-spacing:0.08em; font-size:1.15rem; display:flex; align-items:center; gap:10px; white-space:nowrap; }
+  .brand .k1{ color:var(--cyan); }
+  .brand .k2{ color:var(--copper-light); }
+  .progress-mini{ flex:1; max-width:360px; display:flex; align-items:center; gap:12px; }
+  .progress-track{ flex:1; height:8px; border-radius:2px; background:rgba(255,255,255,0.07); overflow:hidden; position:relative; border:1px solid var(--chrome-line); }
+  .progress-fill{ height:100%; width:0%; background: linear-gradient(90deg, var(--copper), var(--cyan)); transition: width 0.6s cubic-bezier(.16,1,.3,1); }
+  .progress-pct{ font-family:var(--font-mono); font-size:0.85rem; color:var(--cyan); min-width:42px; text-align:right; }
 
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative; padding:110px 0 80px; text-align:center; z-index:1;
-    overflow:hidden;
-  }
+  /* ============ HERO ============ */
+  .hero{ position:relative; padding:120px 0 70px; text-align:center; z-index:3; }
   .hero .eyebrow{
     font-family:var(--font-mono); letter-spacing:0.35em; text-transform:uppercase;
-    color:var(--gray); font-size:0.75rem; margin-bottom:18px;
-    opacity:0; animation: fadeUp 0.8s ease forwards 0.1s;
+    color:var(--gray); font-size:0.72rem; margin-bottom:18px; opacity:0; animation: fadeUp 0.8s ease forwards 0.1s;
   }
   .hero h1{
-    font-family:var(--font-display); font-weight:400;
-    font-size:clamp(2.6rem, 8vw, 5.4rem); line-height:0.95; margin:0;
-    letter-spacing:0.02em;
-    background: linear-gradient(100deg, var(--white) 30%, var(--teal) 55%, var(--red) 80%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    background-size:220% auto;
-    animation: fadeUp 0.9s ease forwards 0.25s, sheen 6s ease-in-out infinite 1.2s;
-    opacity:0;
-  }
-  .hero h1 .slash{
-    display:inline-block; color:var(--red); -webkit-text-fill-color:var(--red);
-    transform: skewX(-10deg);
+    font-family:var(--font-display); font-weight:700; font-size:clamp(2.6rem, 8vw, 5.2rem); line-height:0.95; margin:0;
+    letter-spacing:0.01em; text-transform:uppercase;
+    background: linear-gradient(100deg, var(--white) 20%, var(--copper-light) 50%, var(--cyan) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; background-size:220% auto;
+    opacity:0; animation: fadeUp 0.9s ease forwards 0.25s, sheen 7s ease-in-out infinite 1.2s;
   }
   @keyframes sheen{ 0%,100%{ background-position:0% center;} 50%{ background-position:100% center;} }
-  .hero p.sub{
-    font-family:var(--font-body); color:var(--gray); max-width:620px; margin:22px auto 0;
-    font-size:1.05rem; line-height:1.6;
-    opacity:0; animation: fadeUp 0.8s ease forwards 0.45s;
-  }
-  .hero .meta-row{
-    margin-top:34px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
-    opacity:0; animation: fadeUp 0.8s ease forwards 0.6s;
-  }
-  .pill{
-    font-family:var(--font-mono); font-size:0.78rem; padding:7px 14px; border-radius:99px;
-    border:1px solid var(--line); color:var(--gray); background:rgba(255,255,255,0.02);
-  }
+  .hero p.sub{ font-family:var(--font-body); color:var(--gray); max-width:640px; margin:22px auto 0; font-size:1.05rem; line-height:1.65; opacity:0; animation: fadeUp 0.8s ease forwards 0.45s; }
+  .hero .meta-row{ margin-top:32px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; opacity:0; animation: fadeUp 0.8s ease forwards 0.6s; }
+  .pill{ font-family:var(--font-mono); font-size:0.76rem; padding:7px 14px; border-radius:2px; border:1px solid var(--chrome-line); color:var(--gray); background:rgba(255,255,255,0.02); }
   .pill b{ color:var(--white); }
   @keyframes fadeUp{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
 
-  .hero .katana-line{
-    position:absolute; top:50%; left:50%; width:1400px; height:2px;
-    background:linear-gradient(90deg, transparent, var(--teal), var(--red), transparent);
-    transform:translate(-50%,-50%) rotate(-6deg) scaleX(0);
-    transform-origin:center; opacity:0.5;
-    animation: swing 1.4s cubic-bezier(.16,1,.3,1) forwards 0.05s;
-  }
-  @keyframes swing{ to{ transform:translate(-50%,-50%) rotate(-6deg) scaleX(1); } }
-
-  /* ---------- section titles ---------- */
-  .section-title{
-    display:flex; align-items:baseline; gap:14px; margin:70px 0 26px;
-  }
-  .section-title h2{
-    font-family:var(--font-display); font-weight:400; font-size:1.9rem; letter-spacing:0.03em; margin:0;
-  }
-  .section-title .num{ font-family:var(--font-mono); color:var(--red); font-size:0.9rem; }
-  .section-title .line{ flex:1; height:1px; background:linear-gradient(90deg, var(--line), transparent); }
-
+  /* ============ CALLOUTS ============ */
   .callout{
-    border:1px solid var(--line); border-left:3px solid var(--teal);
-    background: linear-gradient(180deg, rgba(25,232,207,0.05), transparent);
-    border-radius:10px; padding:20px 22px; margin-bottom:14px;
-    font-size:0.92rem; color:var(--gray);
+    border:1px solid var(--chrome-line); border-left:3px solid var(--cyan);
+    background: linear-gradient(180deg, rgba(0,229,255,0.05), transparent);
+    padding:20px 22px; margin-bottom:14px; font-size:0.92rem; color:var(--gray);
   }
   .callout b{ color:var(--white); }
-  .callout.warn{ border-left-color:var(--red); background: linear-gradient(180deg, rgba(255,59,78,0.06), transparent); }
-  .callout code{ font-family:var(--font-mono); color:var(--teal); background:rgba(25,232,207,0.08); padding:2px 6px; border-radius:4px; }
+  .callout.warn{ border-left-color:var(--lime); background: linear-gradient(180deg, rgba(174,234,0,0.06), transparent); }
+  .callout code{ font-family:var(--font-mono); color:var(--cyan); background:rgba(0,229,255,0.08); padding:2px 6px; border-radius:3px; }
 
-  /* ---------- module cards ---------- */
-  .modules{ display:flex; flex-direction:column; gap:18px; margin-bottom:60px; }
+  /* ============ SECTION ARCS ============ */
+  .arc{ position:relative; padding:60px 0 20px; z-index:3; }
+  .arc-banner{
+    display:flex; align-items:center; gap:20px; margin-bottom:36px;
+    opacity:0; transform:translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .arc-banner.in-view{ opacity:1; transform:translateY(0); }
+  .arc-banner .kanji{ font-family:var(--font-display); font-size:3rem; line-height:1; font-weight:700; }
+  .arc-banner .titles h2{ font-family:var(--font-display); font-weight:700; font-size:1.9rem; letter-spacing:0.03em; margin:0 0 4px; text-transform:uppercase; }
+  .arc-banner .titles p{ margin:0; color:var(--gray); font-size:0.92rem; max-width:520px; }
+  .arc[data-section-state="neutral"] .arc-banner .kanji{ color:var(--graphite-light); }
+  .arc[data-section-state="shikai"] .arc-banner .kanji{ color:var(--cyan); text-shadow:0 0 24px rgba(0,229,255,0.5); }
+  .arc[data-section-state="bankai"] .arc-banner .kanji{ color:var(--lime); text-shadow:0 0 30px rgba(174,234,0,0.6); }
+  .arc-banner .line{ flex:1; height:1px; background:linear-gradient(90deg, var(--chrome-line), transparent); }
+
+  .focus-marker{ position:relative; height:1px; }
+
+  /* ============ MODULE CARDS ============ */
+  .modules{ display:flex; flex-direction:column; gap:18px; margin-bottom:20px; perspective:1000px; }
   .module{
-    position:relative;
-    background:var(--bg-card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:26px 26px 22px;
+    position:relative; background:rgba(255,255,255,0.015);
+    border:1px solid var(--chrome-line); border-radius:4px; padding:26px 26px 22px;
     opacity:0; transform:translateY(26px);
-    transition: transform 0.5s cubic-bezier(.16,1,.3,1), opacity 0.6s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
-    overflow:hidden;
+    transition: transform 0.5s cubic-bezier(.16,1,.3,1), opacity 0.6s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    overflow:hidden; transform-style:preserve-3d; will-change:transform;
   }
   .module.in-view{ opacity:1; transform:translateY(0); }
   .module::before{
     content:''; position:absolute; top:0; left:0; width:4px; height:100%;
-    background:linear-gradient(180deg, var(--teal), var(--red));
-    transform:scaleY(0); transform-origin:top; transition:transform 0.5s cubic-bezier(.16,1,.3,1);
+    background: var(--card-accent, var(--graphite-light)); transform:scaleY(0); transform-origin:top;
+    transition: transform 0.5s cubic-bezier(.16,1,.3,1);
   }
   .module.in-view::before{ transform:scaleY(1); }
-  .module:hover{
-    background:var(--bg-card-hover);
-    border-color: rgba(25,232,207,0.35);
-    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(25,232,207,0.08) inset;
-  }
+  .module:hover{ border-color: var(--card-accent, var(--graphite-light)); box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7), 0 0 40px -14px var(--card-glow, transparent); }
   .module.continuous{ border-style:dashed; }
-  .module.done{
-    border-color: rgba(25,232,207,0.5);
-    box-shadow: 0 0 0 1px var(--teal-glow), 0 0 40px -10px var(--teal-glow);
-  }
+  .module.done{ box-shadow: 0 0 0 1px var(--card-accent), 0 0 44px -10px var(--card-glow); }
   .module.done::after{
-    content:'完了'; position:absolute; top:14px; right:18px;
-    font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.15em;
-    color:var(--teal); border:1px solid var(--teal-dim); padding:3px 9px; border-radius:99px;
-    background:rgba(25,232,207,0.08);
+    content:'完了'; position:absolute; top:14px; right:18px; font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.15em;
+    color:var(--card-accent); border:1px solid var(--card-accent); padding:3px 9px; border-radius:2px; background:rgba(255,255,255,0.03);
   }
+  .module[data-state="neutral"]{ --card-accent: var(--graphite-light); --card-glow: rgba(150,153,156,0.25); }
+  .module[data-state="shikai"]{ --card-accent: var(--cyan); --card-glow: rgba(0,229,255,0.3); }
+  .module[data-state="bankai"]{ --card-accent: var(--lime); --card-glow: rgba(174,234,0,0.35); }
 
-  .module-head{
-    display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
-  }
+  .module-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
   .module-title{ display:flex; align-items:center; gap:12px; }
-  .module-index{
-    font-family:var(--font-mono); color:var(--gray-dim); font-size:0.85rem; min-width:28px;
-  }
-  .module-title h3{ margin:0; font-family:var(--font-display); font-weight:400; font-size:1.5rem; letter-spacing:0.01em; }
-  .tag-continuous{
-    font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--red); border:1px solid var(--red-dim); padding:2px 8px; border-radius:99px; background:rgba(255,59,78,0.07);
-  }
+  .module-icon{ flex:none; width:34px; height:34px; color: var(--card-accent); transform:translateZ(20px); }
+  .module-index{ font-family:var(--font-mono); color:var(--gray-dim); font-size:0.85rem; min-width:24px; }
+  .module-title h3{ margin:0; font-family:var(--font-display); font-weight:700; font-size:1.45rem; letter-spacing:0.01em; }
+  .tag-continuous{ font-family:var(--font-mono); font-size:0.64rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--card-accent); border:1px solid var(--card-accent); padding:2px 8px; border-radius:2px; background:rgba(255,255,255,0.03); }
   .module-time{ font-family:var(--font-mono); font-size:0.8rem; color:var(--gray); white-space:nowrap; }
 
-  .skills{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px; }
-  .skill-tag{
-    font-family:var(--font-mono); font-size:0.72rem; color:var(--teal);
-    border:1px solid var(--teal-dim); background:rgba(25,232,207,0.06);
-    padding:4px 10px; border-radius:6px;
-  }
+  .skills{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px; transform:translateZ(6px); }
+  .skill-tag{ font-family:var(--font-mono); font-size:0.72rem; color:var(--card-accent); border:1px solid var(--card-accent); background:rgba(255,255,255,0.02); padding:4px 10px; border-radius:2px; opacity:0.85; }
 
-  .module-meta{
-    display:grid; grid-template-columns: 1fr 1fr; gap:10px 24px;
-    font-size:0.88rem; color:var(--gray); margin-bottom:18px;
-    padding:14px 16px; background:rgba(255,255,255,0.02); border-radius:10px; border:1px solid var(--line);
-  }
-  .module-meta div b{ display:block; color:var(--gray-dim); font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
-  .cert-badge{ display:inline-flex; align-items:center; gap:6px; font-weight:600; }
-  .cert-badge.sim{ color:var(--teal); }
-  .cert-badge.nao{ color:var(--red); }
-  .cert-badge.condicional{ color:#ffb84d; }
+  .module-meta{ display:grid; grid-template-columns: 1fr 1fr; gap:10px 24px; font-size:0.88rem; color:var(--gray); margin-bottom:18px; padding:14px 16px; background:rgba(255,255,255,0.02); border:1px solid var(--chrome-line); }
+  .module-meta div b{ display:block; color:var(--gray-dim); font-family:var(--font-mono); font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+  .cert-badge{ display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--card-accent); }
   .cert-badge .dot{ width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; }
 
   .task-progress{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .task-progress .bar{ flex:1; height:5px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; }
-  .task-progress .bar i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--red)); transition:width 0.5s ease; }
+  .task-progress .bar{ flex:1; height:5px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .task-progress .bar i{ display:block; height:100%; width:0%; background: var(--card-accent); transition:width 0.5s ease; }
   .task-progress span{ font-family:var(--font-mono); font-size:0.72rem; color:var(--gray); }
 
   .tasks{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
-  .task{
-    display:flex; align-items:flex-start; gap:10px; cursor:pointer;
-    font-size:0.92rem; color:var(--gray); padding:8px 10px; border-radius:8px;
-    transition: background 0.25s ease, color 0.25s ease;
-    user-select:none;
-  }
+  .task{ display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:0.92rem; color:var(--gray); padding:8px 10px; border-radius:2px; transition: background 0.25s ease, color 0.25s ease; user-select:none; }
   .task:hover{ background:rgba(255,255,255,0.03); color:var(--white); }
   .task input{ display:none; }
-  .task .box{
-    flex:none; width:18px; height:18px; margin-top:2px; border-radius:4px;
-    border:1.5px solid var(--gray-dim); position:relative; transition: all 0.25s ease;
-  }
-  .task .box::after{
-    content:''; position:absolute; inset:0; margin:auto; width:9px; height:5px;
-    border-left:2px solid var(--bg); border-bottom:2px solid var(--bg);
-    transform: rotate(-45deg) scale(0); transition: transform 0.2s ease 0.05s;
-  }
-  .task input:checked + .box{
-    background: linear-gradient(135deg, var(--teal), var(--red));
-    border-color: transparent;
-    box-shadow: 0 0 12px var(--teal-glow);
-  }
+  .task .box{ flex:none; width:18px; height:18px; margin-top:2px; border-radius:2px; border:1.5px solid var(--gray-dim); position:relative; transition: all 0.25s ease; }
+  .task .box::after{ content:''; position:absolute; inset:0; margin:auto; width:9px; height:5px; border-left:2px solid var(--ink); border-bottom:2px solid var(--ink); transform: rotate(-45deg) scale(0); transition: transform 0.2s ease 0.05s; }
+  .task input:checked + .box{ background: var(--card-accent); border-color: transparent; box-shadow: 0 0 12px var(--card-glow); }
   .task input:checked + .box::after{ transform: rotate(-45deg) scale(1); }
-  .task.checked{ color:var(--gray-dim); text-decoration: line-through; text-decoration-color: var(--red-dim); }
+  .task.checked{ color:var(--gray-dim); text-decoration: line-through; text-decoration-color: var(--card-accent); }
 
-  /* ---------- footer ---------- */
-  .footer{
-    text-align:center; padding:60px 24px 40px; color:var(--gray-dim);
-    font-family:var(--font-mono); font-size:0.78rem; position:relative; z-index:1;
-    border-top:1px solid var(--line); margin-top:40px;
+  /* ============ CORROSION MARK (bankai decorative hit) ============ */
+  .corrosion-mark{
+    position:fixed; z-index:40; width:26px; height:26px; border-radius:50%; pointer-events:none;
+    background: radial-gradient(circle, rgba(174,234,0,0.55), rgba(184,115,51,0.35) 55%, transparent 75%);
+    transform:scale(0.2); opacity:0; animation: corrode 0.9s ease-out forwards;
   }
-  .reset-btn{
-    font-family:var(--font-mono); font-size:0.75rem; color:var(--red);
-    background:transparent; border:1px solid var(--red-dim); padding:8px 16px;
-    border-radius:99px; cursor:pointer; margin-top:18px; transition: all 0.25s ease;
-  }
-  .reset-btn:hover{ background:rgba(255,59,78,0.1); box-shadow:0 0 20px var(--red-glow); }
+  @keyframes corrode{ 0%{ transform:scale(0.2); opacity:0; } 20%{ opacity:1; } 100%{ transform:scale(1.8); opacity:0; } }
+
+  /* ============ FOOTER ============ */
+  .footer{ text-align:center; padding:60px 24px 40px; color:var(--gray-dim); font-family:var(--font-mono); font-size:0.78rem; position:relative; z-index:3; border-top:1px solid var(--chrome-line); margin-top:40px; }
+  .reset-btn{ font-family:var(--font-mono); font-size:0.75rem; color:var(--lime); background:transparent; border:1px solid var(--lime-dim); padding:8px 16px; border-radius:2px; cursor:pointer; margin-top:18px; transition: all 0.25s ease; }
+  .reset-btn:hover{ background:rgba(174,234,0,0.1); box-shadow:0 0 20px rgba(174,234,0,0.35); }
 
   @media (max-width: 640px){
     .module-meta{ grid-template-columns:1fr; }
     .progress-mini{ display:none; }
-    .hero{ padding:80px 0 60px; }
+    .hero{ padding:90px 0 50px; }
+    .wire-foreground, .grain{ display:none !important; }
+    .cloud{ filter:blur(36px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.2s !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg-fx"></div>
-<div class="bg-grid"></div>
-<div id="spirits"></div>
+<!-- ============ ICON SYMBOL DEFS ============ -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-neutral-base" viewBox="0 0 32 32" fill="none">
+    <line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="16" cy="16" r="2.6" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-shikai-reisen" viewBox="0 0 32 32" fill="none">
+    <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+    <path d="M5 11c4-6 6 6 10 0s6 6 11 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M5 21c4-6 6 6 10 0s6 6 11 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+  </symbol>
+  <symbol id="icon-bankai-raiun-reiken" viewBox="0 0 32 32" fill="none">
+    <path d="M16 4.5c5 0 8 3.3 8 7.2 0 2-1 3.5-2.5 4.5 2.5.4 4.4 2.3 4.4 4.8 0 2.9-2.7 4.8-6.1 4.8H10.4c-2.9 0-5.2-1.9-5.2-4.4 0-1.9 1.1-3.5 2.9-4.2C6.5 15.6 5.3 13.7 5.3 11.4 5.3 7.4 8.6 4.5 13 4.5z" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+    <path d="M17.5 14.5l-4 6h3l-2.2 5.2 6.4-7.2h-3.2z" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<!-- ============ BACKGROUND STATE LAYERS ============ -->
+<div class="bg-stack">
+  <div class="bg-layer is-neutral">
+    <svg class="wire-svg" width="100%" height="100%" style="position:absolute;inset:0;">
+      <defs>
+        <pattern id="wire-neutral" width="110" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(6)">
+          <path d="M-10 35 L120 35" stroke="var(--graphite-light)" stroke-width="1.4" opacity="0.6"/>
+          <g stroke="var(--graphite-light)" stroke-width="1.2" opacity="0.5">
+            <path d="M25 29 L25 41 M21 31 L29 39 M29 31 L21 39"/>
+            <path d="M75 29 L75 41 M71 31 L79 39 M79 31 L71 39"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#wire-neutral)"/>
+    </svg>
+  </div>
+  <div class="bg-layer is-shikai">
+    <svg class="wire-svg" width="100%" height="100%" style="position:absolute;inset:0;">
+      <defs>
+        <pattern id="wire-shikai" width="100" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
+          <path d="M-10 32 L110 32" stroke="var(--copper)" stroke-width="2" opacity="0.7"/>
+          <g stroke="var(--copper-light)" stroke-width="2">
+            <path d="M18 24 L18 40 M13 27 L23 37 M23 27 L13 37"/>
+            <path d="M58 24 L58 40 M53 27 L63 37 M63 27 L53 37"/>
+          </g>
+          <circle cx="88" cy="32" r="2" fill="var(--cyan)" opacity="0.9"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#wire-shikai)"/>
+    </svg>
+  </div>
+  <div class="bg-layer is-bankai">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <svg width="100%" height="100%" style="position:absolute;inset:0;">
+      <polyline class="bolt b1" points="20%,0 25%,20% 18%,22% 24%,45% 15%,48% 22%,80%" fill="none" stroke="var(--lime)" stroke-width="2"/>
+      <polyline class="bolt b2" points="70%,5% 66%,25% 74%,28% 65%,55% 72%,58% 60%,85%" fill="none" stroke="var(--lime)" stroke-width="2"/>
+      <polyline class="bolt b3" points="45%,0 50%,15% 43%,18% 48%,40%" fill="none" stroke="var(--lime)" stroke-width="1.6"/>
+    </svg>
+  </div>
+</div>
+
+<div class="wire-foreground" id="wireForeground">
+  <svg width="100%" height="100%">
+    <defs>
+      <pattern id="wire-focus" width="70" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(-10)">
+        <path d="M-10 23 L90 23" stroke="var(--copper-light)" stroke-width="3" opacity="0.85"/>
+        <g stroke="var(--cyan)" stroke-width="2.4">
+          <path d="M14 15 L14 31 M9 18 L19 28 M19 18 L9 28"/>
+          <path d="M46 15 L46 31 M41 18 L51 28 M51 18 L41 28"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#wire-focus)"/>
+  </svg>
+</div>
+
+<canvas class="particles-canvas" id="particlesCanvas"></canvas>
+<div class="grain"></div>
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><span class="kanji">斬</span><span>GUIA://CLOUD</span><span class="kanji2">魂</span></div>
+    <div class="brand"><span class="k1">斬</span><span>GUIA://CLOUD</span><span class="k2">魂</span></div>
     <div class="progress-mini">
       <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
       <div class="progress-pct" id="topProgressPct">0%</div>
@@ -319,63 +358,56 @@
 </div>
 
 <header class="hero">
-  <div class="katana-line"></div>
   <div class="wrap">
-    <div class="eyebrow">infra analyst → cloud analyst // roadmap de reiatsu</div>
-    <h1>BANKAI<span class="slash">.</span>CLOUD</h1>
-    <p class="sub">Roadmap revisado por um conselho técnico de 4 perspectivas independentes. Meta: núcleo empregável em <b style="color:var(--white)">10–14 meses</b>, sem carregar peso morto até o fim da lâmina.</p>
+    <div class="eyebrow">infra analyst → cloud analyst // shikai · bankai · o caminho da lâmina</div>
+    <h1>BANKAI.CLOUD</h1>
+    <p class="sub">Cada fase do roadmap é um estado da lâmina: <b style="color:var(--white)">repouso</b>, <b style="color:var(--white)">liberação (shikai)</b> e <b style="color:var(--white)">virada decisiva (bankai)</b>. Role a página — o cenário muda com você.</p>
     <div class="meta-row">
       <span class="pill"><b>12</b> módulos</span>
-      <span class="pill"><b>2</b> trilhas contínuas</span>
+      <span class="pill"><b>4</b> arcos narrativos</span>
       <span class="pill">atualizado <b>26/08/2026</b></span>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-
   <div class="callout">
-    <b>Como usar:</b> marque cada tarefa conforme avança — o progresso fica salvo neste navegador. Módulos com borda tracejada e a tag <span style="color:var(--red)">CONTÍNUO</span> rodam em paralelo com tudo o resto, desde hoje.
+    <b>Como usar:</b> marque cada tarefa conforme avança — o progresso fica salvo neste navegador. O fundo, as partículas e a "névoa de cobre" mudam de estado conforme você rola por cada arco da jornada.
   </div>
   <div class="callout warn">
-    <b>Regra de honestidade</b> (sugestão do Cético do conselho): toda sexta-feira, pergunte <code>isso gerou um artefato?</code> — um commit, um recurso provisionado, um lab documentado. Se não, não foi estudo — foi trabalho com nome bonito.
+    <b>Regra de honestidade:</b> toda sexta-feira, pergunte <code>isso gerou um artefato?</code> — um commit, um recurso provisionado, um lab documentado. Se não, não foi estudo — foi trabalho com nome bonito.
   </div>
 
-  <div class="section-title"><span class="num">序</span><h2>Trilha de Estudos</h2><div class="line"></div></div>
-
-  <section class="modules" id="modules"></section>
-
+  <div id="arcsRoot"></div>
 </main>
 
 <footer class="footer">
-  斬魄刀 — cada módulo concluído é um selo quebrado.<br>
+  斬魄刀 — cada módulo concluído é um selo quebrado. O Bankai não é o fim: é a virada.<br>
   Baseado na síntese de um Conselho Técnico de 4 agentes independentes avaliando o roadmap de transição Infra → Cloud.
   <br>
   <button class="reset-btn" id="resetBtn">Resetar progresso</button>
 </footer>
 
 <script>
+/* ======================================================================
+   DATA
+====================================================================== */
 const MODULES = [
-  {
-    name: "Git & GitHub como hábito",
-    continuous: true,
+  { name: "Git & GitHub como hábito", continuous: true,
     skills: ["Versionamento", "Branch", "Commit", "Pull Request", ".gitignore"],
     where: "GitHub Skills (gratuito, interativo)",
-    cert: "nao", certLabel: "Não aplicável",
+    cert: "Opcional — GitHub Foundations (GH-900, US$99) é barato e rápido, mas baixa prioridade",
     time: "2-3 dias de base + uso diário",
     tasks: [
       "Fluxo básico: clone, add, commit, push, .gitignore",
       "Branches e Pull Requests (abra PR e revise seu próprio diff)",
       "Resolver um conflito de merge de propósito, num repo de teste",
       "Regra adotada: todo lab a partir daqui vira commit público"
-    ]
-  },
-  {
-    name: "Linux essencial + Bash",
-    continuous: true,
+    ]},
+  { name: "Linux essencial + Bash", continuous: true,
     skills: ["Shell", "Permissões", "systemd", "SSH", "Bash scripting"],
     where: "Linux Journey · OverTheWire Bandit · WSL2 na prática",
-    cert: "nao", certLabel: "Não vale (ROI baixo p/ este objetivo)",
+    cert: "Não vale (ROI baixo p/ este objetivo)",
     time: "60-80h ao longo de ~4 meses",
     tasks: [
       "Ambiente pronto: WSL2 + Ubuntu (ou VM própria)",
@@ -383,14 +415,11 @@ const MODULES = [
       "Gerenciamento de pacotes (apt), SSH, variáveis de ambiente",
       "Bash scripting básico — um script real de automação",
       "Terminal padrão do dia a dia trocado para bash/WSL"
-    ]
-  },
-  {
-    name: "AZ-104 (finalizar)",
-    continuous: false,
+    ]},
+  { name: "AZ-104 (finalizar)", continuous: false,
     skills: ["VMs", "VNet", "Storage", "RBAC", "Monitor", "Bicep básico"],
     where: "Microsoft Learn (oficial) · canal John Savill (YouTube)",
-    cert: "sim", certLabel: "Sim — certificado-âncora do plano",
+    cert: "Sim — certificado-âncora do plano",
     time: "6-10 semanas (restante)",
     tasks: [
       "Identity, governance, RBAC",
@@ -399,14 +428,11 @@ const MODULES = [
       "Virtual networking básico",
       "Monitoramento básico e backup",
       "Prova AZ-104 agendada e feita"
-    ]
-  },
-  {
-    name: "Terraform em Azure",
-    continuous: false,
+    ]},
+  { name: "Terraform em Azure", continuous: false,
     skills: ["HCL", "Providers", "State remoto", "Módulos", "Plan/Apply"],
     where: "HashiCorp Learn (tutoriais oficiais) · recriar labs do AZ-104",
-    cert: "condicional", certLabel: "Não por ora — portfólio pesa mais",
+    cert: "Não por ora — portfólio pesa mais",
     time: "3-4 semanas",
     tasks: [
       "HCL básico: providers, resources, variables, outputs",
@@ -414,28 +440,22 @@ const MODULES = [
       "Recriar em Terraform 3+ recursos feitos clicando no AZ-104",
       "Módulos reutilizáveis",
       "Projeto público: mini ambiente (VNet + NSG + Key Vault + RBAC)"
-    ]
-  },
-  {
-    name: "CI/CD mínimo",
-    continuous: false,
+    ]},
+  { name: "CI/CD mínimo", continuous: false,
     skills: ["GitHub Actions", "OIDC", "Pipeline plan/apply"],
     where: "Docs GitHub Actions · GitHub Skills \"Continuous Integration\"",
-    cert: "nao", certLabel: "Não existe cert de entrada relevante",
+    cert: "Não existe cert de entrada relevante",
     time: "1-2 semanas (junto ao módulo Terraform)",
     tasks: [
       "Pipeline: fmt + validate + plan no Pull Request",
       "Apply automático no merge",
       "Autenticação via OIDC (sem secret em texto puro)",
       "README do repositório documentando o pipeline"
-    ]
-  },
-  {
-    name: "Rede em nuvem avançada",
-    continuous: false,
+    ]},
+  { name: "Rede em nuvem avançada", continuous: false,
     skills: ["VNet peering", "Hub-spoke", "VPN S2S", "DNS híbrido", "Private Endpoint"],
     where: "Microsoft Learn (trilha AZ-700, sem prova)",
-    cert: "condicional", certLabel: "Estude o conteúdo, adie o exame",
+    cert: "Estude o conteúdo, adie o exame",
     time: "4-5 semanas",
     tasks: [
       "VNet peering e topologia hub-spoke",
@@ -443,56 +463,44 @@ const MODULES = [
       "DNS híbrido e Private DNS Zones",
       "Private Endpoint — por que o on-prem às vezes não resolve",
       "Landing Zone / Cloud Adoption Framework — visão geral"
-    ]
-  },
-  {
-    name: "Governança, Backup e DR",
-    continuous: false,
+    ]},
+  { name: "Governança, Backup e DR", continuous: false,
     skills: ["Management Groups", "Azure Policy", "Tags", "Backup", "Site Recovery", "RPO/RTO"],
     where: "Microsoft Learn (módulos Governance e Business Continuity)",
-    cert: "nao", certLabel: "Coberto pelo AZ-104/AZ-305",
+    cert: "Coberto pelo AZ-104/AZ-305",
     time: "2-3 semanas",
     tasks: [
       "Management Groups e estrutura de subscriptions",
       "Azure Policy (audit/deny/deployIfNotExists) — não é GPO",
       "Tagging e budget alerts na sua própria subscription de lab",
       "Azure Backup e Site Recovery — RPO/RTO na prática"
-    ]
-  },
-  {
-    name: "Observabilidade e KQL",
-    continuous: false,
+    ]},
+  { name: "Observabilidade e KQL", continuous: false,
     skills: ["Azure Monitor", "Log Analytics", "KQL", "Alert rules"],
     where: "Microsoft Learn (\"KQL for Azure Monitor\") · docs do Kusto",
-    cert: "nao", certLabel: "Não existe cert de entrada específica",
+    cert: "Não existe cert de entrada específica",
     time: "2-3 semanas",
     tasks: [
       "Azure Monitor e Log Analytics Workspace",
       "KQL básico: where, summarize, join",
       "Alert rules e Action Groups",
       "Aplicar KQL em algo real: sign-in logs do Entra ID"
-    ]
-  },
-  {
-    name: "Docker + Kubernetes conceitual",
-    continuous: false,
+    ]},
+  { name: "Docker + Kubernetes conceitual", continuous: false,
     skills: ["Imagens", "Containers", "Pods", "Deployments (conceito)"],
     where: "Docker Curriculum (gratuito) · \"Kubernetes for Beginners\" (KodeKloud)",
-    cert: "nao", certLabel: "Não — CKA fica para quando o cargo exigir",
+    cert: "Não — CKA fica para quando o cargo exigir",
     time: "2-3 semanas",
     tasks: [
       "Imagens, containers, Dockerfile básico",
       "docker-compose para subir um app com 2 serviços",
       "Conceitos de K8s: pods, deployments, services",
       "AKS — visão geral de quando faz sentido usar"
-    ]
-  },
-  {
-    name: "Portfólio & Processo seletivo",
-    continuous: true,
+    ]},
+  { name: "Portfólio & Processo seletivo", continuous: true,
     skills: ["CV para cloud", "LinkedIn", "Repositórios públicos", "Entrevista"],
     where: "GitHub (seus próprios repositórios) · LinkedIn Learning",
-    cert: "nao", certLabel: "Não aplicável",
+    cert: "Não aplicável",
     time: "Contínuo, a partir do mês 4-5",
     tasks: [
       "CV reescrito com linguagem de cloud",
@@ -500,14 +508,11 @@ const MODULES = [
       "2+ repositórios públicos com README e diagrama",
       "Primeira leva de candidaturas enviada",
       "Simulado de entrevista técnica feito"
-    ]
-  },
-  {
-    name: "AWS — mapeamento conceitual",
-    continuous: false,
+    ]},
+  { name: "AWS — mapeamento conceitual", continuous: false,
     skills: ["IAM vs Entra", "VPC vs VNet", "EC2/S3/RDS vs VM/Blob/SQL"],
     where: "AWS Skill Builder (módulos gratuitos de fundamentos)",
-    cert: "condicional", certLabel: "Só se vagas da sua região pedirem",
+    cert: "Só se vagas da sua região pedirem",
     time: "2 semanas de mapeamento; SAA-C03 pós-contratação",
     tasks: [
       "IAM vs Entra ID",
@@ -515,100 +520,130 @@ const MODULES = [
       "EC2/S3/RDS vs VM/Blob Storage/Azure SQL",
       "Pesquisa: 30-40 vagas reais tabuladas por palavra-chave",
       "Decisão registrada: SAA-C03 vale a pena p/ seu mercado?"
-    ]
-  },
-  {
-    name: "SC-300 (opcional)",
-    continuous: false,
+    ]},
+  { name: "SC-300 (opcional)", continuous: false,
     skills: ["Identity governance", "Conditional Access avançado", "PIM"],
     where: "Microsoft Learn (trilha SC-300)",
-    cert: "condicional", certLabel: "Só se mirar trilha de Identidade/IAM",
+    cert: "Só se mirar trilha de Identidade/IAM",
     time: "6-8 semanas, se optar por ela",
     tasks: [
       "Decisão consciente: quero mirar identidade/IAM como trilha?",
       "Se sim: Identity governance, Conditional Access avançado, PIM",
       "Se sim: prova SC-300 agendada"
-    ]
-  }
+    ]}
 ];
 
-const CERT_LABELS = { sim: "SIM", nao: "NÃO", condicional: "COND." };
-const modulesEl = document.getElementById('modules');
+const SECTIONS = [
+  { id:"neutral-1", state:"neutral", kanji:"序", title:"Fundamentos", subtitle:"Antes do primeiro corte. A base que sustenta a lâmina.", range:[0,1] },
+  { id:"shikai",    state:"shikai",  kanji:"解", title:"Shikai — Consolidação", subtitle:"Liberte a lâmina. A fase em que ela corta o dia a dia.", range:[2,8] },
+  { id:"bankai",    state:"bankai",  kanji:"卍解", title:"Bankai — A Virada", subtitle:"O momento decisivo: o salto pra Cloud vira real.", range:[9,9] },
+  { id:"neutral-2", state:"neutral", kanji:"余", title:"Horizonte", subtitle:"Depois da tempestade. Caminhos opcionais, no seu ritmo.", range:[10,11] }
+];
 
+const ICON_BY_STATE = { neutral:"icon-neutral-base", shikai:"icon-shikai-reisen", bankai:"icon-bankai-raiun-reiken" };
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_MOBILE = window.matchMedia('(max-width: 640px)').matches;
+
+/* ======================================================================
+   RENDER
+====================================================================== */
+const arcsRoot = document.getElementById('arcsRoot');
 function taskKey(mi, ti){ return `cloudguide_m${mi}_t${ti}`; }
 
-MODULES.forEach((m, mi) => {
-  const card = document.createElement('article');
-  card.className = 'module' + (m.continuous ? ' continuous' : '');
-  card.dataset.index = mi;
+SECTIONS.forEach(section => {
+  const arc = document.createElement('section');
+  arc.className = 'arc';
+  arc.dataset.sectionState = section.state;
+  arc.id = section.id;
 
-  const certClass = m.cert;
-  const certText = CERT_LABELS[m.cert] || '';
+  const marker = document.createElement('div');
+  marker.className = 'focus-marker';
+  marker.dataset.target = section.state;
+  arc.appendChild(marker);
 
-  card.innerHTML = `
-    <div class="module-head">
-      <div class="module-title">
-        <span class="module-index">${String(mi+1).padStart(2,'0')}</span>
-        <h3>${m.name}</h3>
-        ${m.continuous ? '<span class="tag-continuous">contínuo</span>' : ''}
+  const banner = document.createElement('div');
+  banner.className = 'arc-banner';
+  banner.innerHTML = `
+    <span class="kanji">${section.kanji}</span>
+    <div class="titles"><h2>${section.title}</h2><p>${section.subtitle}</p></div>
+    <div class="line"></div>`;
+  arc.appendChild(banner);
+
+  const list = document.createElement('div');
+  list.className = 'modules';
+
+  for (let mi = section.range[0]; mi <= section.range[1]; mi++){
+    const m = MODULES[mi];
+    const card = document.createElement('article');
+    card.className = 'module' + (m.continuous ? ' continuous' : '');
+    card.dataset.index = mi;
+    card.dataset.state = section.state;
+
+    card.innerHTML = `
+      <div class="module-head">
+        <div class="module-title">
+          <svg class="module-icon"><use href="#${ICON_BY_STATE[section.state]}"></use></svg>
+          <span class="module-index">${String(mi+1).padStart(2,'0')}</span>
+          <h3>${m.name}</h3>
+          ${m.continuous ? '<span class="tag-continuous">contínuo</span>' : ''}
+        </div>
+        <div class="module-time">${m.time}</div>
       </div>
-      <div class="module-time">${m.time}</div>
-    </div>
-    <div class="skills">${m.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
-    <div class="module-meta">
-      <div><b>Onde estudar</b>${m.where}</div>
-      <div><b>Vale certificação?</b><span class="cert-badge ${certClass}"><span class="dot"></span>${certText} — ${m.certLabel}</span></div>
-    </div>
-    <div class="task-progress">
-      <div class="bar"><i></i></div>
-      <span class="ratio">0/${m.tasks.length}</span>
-    </div>
-    <ul class="tasks">
-      ${m.tasks.map((t, ti) => `
-        <li class="task" data-mi="${mi}" data-ti="${ti}">
-          <input type="checkbox" id="${taskKey(mi,ti)}">
-          <span class="box"></span>
-          <span class="label">${t}</span>
-        </li>`).join('')}
-    </ul>
-  `;
-  modulesEl.appendChild(card);
+      <div class="skills">${m.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
+      <div class="module-meta">
+        <div><b>Onde estudar</b>${m.where}</div>
+        <div><b>Vale certificação?</b><span class="cert-badge"><span class="dot"></span>${m.cert}</span></div>
+      </div>
+      <div class="task-progress">
+        <div class="bar"><i></i></div>
+        <span class="ratio">0/${m.tasks.length}</span>
+      </div>
+      <ul class="tasks">
+        ${m.tasks.map((t, ti) => `
+          <li class="task" data-mi="${mi}" data-ti="${ti}">
+            <input type="checkbox" id="${taskKey(mi,ti)}">
+            <span class="box"></span>
+            <span class="label">${t}</span>
+          </li>`).join('')}
+      </ul>
+    `;
+    list.appendChild(card);
+  }
+  arc.appendChild(list);
+  arcsRoot.appendChild(arc);
 });
 
+/* ======================================================================
+   PROGRESS (localStorage)
+====================================================================== */
 function updateModule(mi){
   const card = document.querySelector(`.module[data-index="${mi}"]`);
+  if (!card) return;
   const tasks = card.querySelectorAll('.task');
   let done = 0;
   tasks.forEach(t => {
     const cb = t.querySelector('input');
     if (localStorage.getItem(taskKey(mi, t.dataset.ti)) === '1'){
-      cb.checked = true; t.classList.add('checked');
-      done++;
-    } else {
-      cb.checked = false; t.classList.remove('checked');
-    }
+      cb.checked = true; t.classList.add('checked'); done++;
+    } else { cb.checked = false; t.classList.remove('checked'); }
   });
   const pct = Math.round((done / tasks.length) * 100);
   card.querySelector('.task-progress .bar i').style.width = pct + '%';
   card.querySelector('.task-progress .ratio').textContent = `${done}/${tasks.length}`;
   card.classList.toggle('done', done === tasks.length);
 }
-
 function updateAll(){
   MODULES.forEach((_, mi) => updateModule(mi));
   let totalDone = 0, totalTasks = 0;
-  MODULES.forEach((m, mi) => {
-    m.tasks.forEach((_, ti) => {
-      totalTasks++;
-      if (localStorage.getItem(taskKey(mi, ti)) === '1') totalDone++;
-    });
-  });
+  MODULES.forEach((m, mi) => m.tasks.forEach((_, ti) => {
+    totalTasks++;
+    if (localStorage.getItem(taskKey(mi, ti)) === '1') totalDone++;
+  }));
   const pct = totalTasks ? Math.round((totalDone/totalTasks)*100) : 0;
   document.getElementById('topProgress').style.width = pct + '%';
   document.getElementById('topProgressPct').textContent = pct + '%';
 }
-
-modulesEl.addEventListener('click', (e) => {
+arcsRoot.addEventListener('click', (e) => {
   const li = e.target.closest('.task');
   if (!li) return;
   const mi = li.dataset.mi, ti = li.dataset.ti;
@@ -618,38 +653,233 @@ modulesEl.addEventListener('click', (e) => {
   updateModule(Number(mi));
   updateAll();
 });
-
 document.getElementById('resetBtn').addEventListener('click', () => {
   if (!confirm('Resetar todo o progresso salvo neste navegador?')) return;
   Object.keys(localStorage).filter(k => k.startsWith('cloudguide_')).forEach(k => localStorage.removeItem(k));
   updateAll();
 });
-
 updateAll();
 
-// scroll reveal
-const io = new IntersectionObserver((entries) => {
+/* ======================================================================
+   SCROLL REVEAL
+====================================================================== */
+const revealIO = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
 }, { threshold: 0.12 });
-document.querySelectorAll('.module').forEach(el => io.observe(el));
+document.querySelectorAll('.module, .arc-banner').forEach(el => revealIO.observe(el));
 
-// floating spirit particles
-const spiritsEl = document.getElementById('spirits');
-const colors = ['rgba(25,232,207,0.7)', 'rgba(255,59,78,0.6)'];
-for (let i = 0; i < 22; i++){
-  const s = document.createElement('div');
-  s.className = 'spirit';
-  const size = 2 + Math.random() * 4;
-  s.style.width = size + 'px';
-  s.style.height = size + 'px';
-  s.style.left = Math.random() * 100 + 'vw';
-  s.style.bottom = '-10px';
-  s.style.background = colors[i % 2];
-  s.style.boxShadow = `0 0 ${size*3}px ${colors[i % 2]}`;
-  s.style.animationDuration = (10 + Math.random() * 14) + 's';
-  s.style.animationDelay = (Math.random() * 12) + 's';
-  spiritsEl.appendChild(s);
+/* ======================================================================
+   ACTIVE STATE CONTROLLER (drives background/particles crossfade)
+====================================================================== */
+let currentState = 'neutral';
+function setActiveState(state){
+  if (state === currentState) return;
+  currentState = state;
+  document.documentElement.dataset.activeState = state;
 }
+let scrollTicking = false;
+function evaluateActiveState(){
+  scrollTicking = false;
+  const probeY = Math.round(window.innerHeight * 0.4);
+  const el = document.elementFromPoint(Math.round(window.innerWidth/2), probeY);
+  const arcEl = el && el.closest ? el.closest('.arc') : null;
+  if (arcEl) setActiveState(arcEl.dataset.sectionState);
+}
+window.addEventListener('scroll', () => {
+  if (!scrollTicking){ scrollTicking = true; requestAnimationFrame(evaluateActiveState); }
+}, { passive:true });
+evaluateActiveState();
+
+/* ======================================================================
+   WIRE FOREGROUND "RACK FOCUS" TRIGGER
+====================================================================== */
+const wireForeground = document.getElementById('wireForeground');
+const focusIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.target.dataset.target === 'shikai'){
+      wireForeground.classList.add('active');
+      clearTimeout(wireForeground._t);
+      wireForeground._t = setTimeout(() => wireForeground.classList.remove('active'), 1400);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.focus-marker').forEach(el => focusIO.observe(el));
+
+/* ======================================================================
+   LIGHTNING FLICKER (bankai)
+====================================================================== */
+if (!REDUCE_MOTION){
+  function scheduleLightning(){
+    const delay = 2200 + Math.random() * 3800;
+    setTimeout(() => {
+      if (currentState === 'bankai'){
+        const bolts = document.querySelectorAll('.bolt');
+        const bolt = bolts[Math.floor(Math.random()*bolts.length)];
+        bolt.classList.remove('flash'); void bolt.offsetWidth; bolt.classList.add('flash');
+      }
+      scheduleLightning();
+    }, delay);
+  }
+  scheduleLightning();
+}
+
+/* ======================================================================
+   CORROSION MARK SPAWNER (bankai)
+====================================================================== */
+if (!REDUCE_MOTION){
+  function spawnCorrosion(){
+    const delay = 1600 + Math.random() * 2600;
+    setTimeout(() => {
+      if (currentState === 'bankai'){
+        const cards = [...document.querySelectorAll('.module[data-state="bankai"]')]
+          .filter(c => { const r = c.getBoundingClientRect(); return r.top < window.innerHeight && r.bottom > 0; });
+        if (cards.length){
+          const card = cards[Math.floor(Math.random()*cards.length)];
+          const r = card.getBoundingClientRect();
+          const mark = document.createElement('div');
+          mark.className = 'corrosion-mark';
+          mark.style.left = (r.left + Math.random()*r.width) + 'px';
+          mark.style.top = (r.top + Math.random()*r.height) + 'px';
+          document.body.appendChild(mark);
+          mark.addEventListener('animationend', () => mark.remove());
+        }
+      }
+      spawnCorrosion();
+    }, delay);
+  }
+  spawnCorrosion();
+}
+
+/* ======================================================================
+   PARALLAX + 3D TILT ON CARDS
+====================================================================== */
+if (!REDUCE_MOTION){
+  let parallaxTicking = false;
+  function applyParallax(){
+    parallaxTicking = false;
+    const vh = window.innerHeight;
+    document.querySelectorAll('.module-icon').forEach(icon => {
+      const card = icon.closest('.module');
+      const r = card.getBoundingClientRect();
+      const centerOffset = (r.top + r.height/2) - vh/2;
+      const factor = Math.max(-1, Math.min(1, centerOffset / vh));
+      icon.style.transform = `translateY(${factor * -10}px)`;
+    });
+  }
+  window.addEventListener('scroll', () => {
+    if (!parallaxTicking){ parallaxTicking = true; requestAnimationFrame(applyParallax); }
+  }, { passive:true });
+  applyParallax();
+
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.addEventListener('mousemove', (e) => {
+      const card = e.target.closest && e.target.closest('.module');
+      document.querySelectorAll('.module').forEach(c => { if (c !== card) c.style.transform = ''; });
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${py * -4}deg) rotateY(${px * 4}deg)`;
+    });
+  }
+}
+
+/* ======================================================================
+   PARTICLE SYSTEM (sparks / dust / rain — crossfaded by state)
+====================================================================== */
+(function particleSystem(){
+  const canvas = document.getElementById('particlesCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = canvas.width = window.innerWidth * dpr;
+    h = canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  if (REDUCE_MOTION){ return; }
+
+  const CAPS = IS_MOBILE ? { spark:14, dust:8, rain:28 } : { spark:38, dust:18, rain:85 };
+  const intensity = { neutral:1, shikai:0, bankai:0 };
+  const targetFor = (state) => ({
+    neutral: state === 'neutral' ? 1 : 0,
+    shikai: state === 'shikai' ? 1 : 0,
+    bankai: state === 'bankai' ? 1 : 0
+  });
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  const sparks = Array.from({length: CAPS.spark}, () => ({
+    x: rand(0,1), y: rand(0,1), vx: rand(-0.0003,0.0003), vy: rand(-0.0006,-0.0001),
+    r: rand(1,2.4), hue: Math.random() > 0.5 ? '184,115,51' : '0,229,255'
+  }));
+  const dust = Array.from({length: CAPS.dust}, () => ({
+    x: rand(0,1), y: rand(0,1), vx: rand(-0.00008,0.00008), vy: rand(-0.0002,-0.00005), r: rand(0.8,1.6)
+  }));
+  const rain = Array.from({length: CAPS.rain}, () => ({
+    x: rand(0,1), y: rand(-1,1), vy: rand(0.006,0.014), len: rand(10,26)
+  }));
+
+  function tick(){
+    requestAnimationFrame(tick);
+    const t = targetFor(currentState);
+    intensity.neutral += (t.neutral - intensity.neutral) * 0.04;
+    intensity.shikai  += (t.shikai  - intensity.shikai)  * 0.04;
+    intensity.bankai  += (t.bankai  - intensity.bankai)  * 0.04;
+
+    ctx.clearRect(0,0,w,h);
+
+    if (intensity.shikai > 0.01){
+      ctx.globalAlpha = intensity.shikai;
+      sparks.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.y < -0.05) p.y = 1.05;
+        if (p.x < -0.05) p.x = 1.05; if (p.x > 1.05) p.x = -0.05;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${p.hue},${0.8})`;
+        ctx.shadowColor = `rgba(${p.hue},0.9)`; ctx.shadowBlur = 6*dpr;
+        ctx.arc(p.x*w, p.y*h, p.r*dpr, 0, Math.PI*2);
+        ctx.fill();
+      });
+      ctx.shadowBlur = 0;
+    }
+
+    if (intensity.neutral > 0.01){
+      ctx.globalAlpha = intensity.neutral * 0.6;
+      dust.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.y < -0.05) p.y = 1.05;
+        if (p.x < -0.05) p.x = 1.05; if (p.x > 1.05) p.x = -0.05;
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(157,160,163,0.7)';
+        ctx.arc(p.x*w, p.y*h, p.r*dpr, 0, Math.PI*2);
+        ctx.fill();
+      });
+    }
+
+    if (intensity.bankai > 0.01){
+      ctx.globalAlpha = intensity.bankai;
+      ctx.strokeStyle = 'rgba(174,234,0,0.55)';
+      ctx.lineWidth = 1.2*dpr;
+      rain.forEach(p => {
+        p.y += p.vy;
+        if (p.y > 1.05){ p.y = -0.05; p.x = rand(0,1); }
+        const x = p.x*w, y = p.y*h;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 2*dpr, y + p.len*dpr);
+        ctx.stroke();
+      });
+    }
+
+    ctx.globalAlpha = 1;
+  }
+  tick();
+})();
 </script>
 
 </body>
