@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>始 // Guia de Estudos — Rumo a Cloud</title>
+<meta name="description" content="Roadmap de estudos para transição de carreira Infra → Cloud Analyst.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07090b;
+    --bg-soft:#0d1215;
+    --bg-card:#0f1518;
+    --bg-card-hover:#121a1e;
+    --line: rgba(255,255,255,0.08);
+    --teal:#19e8cf;
+    --teal-dim:#0d8f80;
+    --teal-glow: rgba(25,232,207,0.35);
+    --red:#ff3b4e;
+    --red-dim:#8c1524;
+    --red-glow: rgba(255,59,78,0.35);
+    --white:#f2f6f6;
+    --gray:#8b9a9c;
+    --gray-dim:#5c686a;
+    --font-display: 'Bebas Neue', 'Space Grotesk', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--white);
+    font-family:var(--font-body);
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ---------- animated background ---------- */
+  .bg-fx{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(25,232,207,0.10), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 90% 10%, rgba(255,59,78,0.09), transparent 60%),
+      linear-gradient(var(--bg), var(--bg));
+  }
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.35;
+    background-image:
+      linear-gradient(rgba(25,232,207,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(25,232,207,0.06) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 10%, transparent 75%);
+  }
+  .spirit{
+    position:fixed; z-index:0; pointer-events:none; border-radius:50%;
+    filter: blur(1px);
+    animation: drift linear infinite;
+    opacity:0.55;
+  }
+  @keyframes drift{
+    0%{ transform: translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.5; }
+    100%{ transform: translateY(-120vh) translateX(30px); opacity:0; }
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+  a{ color:var(--teal); }
+
+  /* ---------- sticky progress header ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(14px) saturate(140%);
+    background: rgba(7,9,11,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1100px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .brand{
+    font-family:var(--font-display); letter-spacing:0.08em; font-size:1.15rem;
+    display:flex; align-items:center; gap:10px; white-space:nowrap;
+  }
+  .brand .kanji{ color:var(--red); font-family:var(--font-display); }
+  .brand .kanji2{ color:var(--teal); }
+  .progress-mini{
+    flex:1; max-width:360px; display:flex; align-items:center; gap:12px;
+  }
+  .progress-track{
+    flex:1; height:8px; border-radius:99px; background:rgba(255,255,255,0.07);
+    overflow:hidden; position:relative; border:1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%; width:0%; border-radius:99px;
+    background: linear-gradient(90deg, var(--teal), var(--red));
+    transition: width 0.6s cubic-bezier(.16,1,.3,1);
+    position:relative;
+  }
+  .progress-fill::after{
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    width:40px; animation: shine 2.4s ease-in-out infinite;
+  }
+  @keyframes shine{ 0%{ transform:translateX(-60px);} 100%{ transform:translateX(320px);} }
+  .progress-pct{ font-family:var(--font-mono); font-size:0.85rem; color:var(--teal); min-width:42px; text-align:right; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; padding:110px 0 80px; text-align:center; z-index:1;
+    overflow:hidden;
+  }
+  .hero .eyebrow{
+    font-family:var(--font-mono); letter-spacing:0.35em; text-transform:uppercase;
+    color:var(--gray); font-size:0.75rem; margin-bottom:18px;
+    opacity:0; animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+  .hero h1{
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(2.6rem, 8vw, 5.4rem); line-height:0.95; margin:0;
+    letter-spacing:0.02em;
+    background: linear-gradient(100deg, var(--white) 30%, var(--teal) 55%, var(--red) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:220% auto;
+    animation: fadeUp 0.9s ease forwards 0.25s, sheen 6s ease-in-out infinite 1.2s;
+    opacity:0;
+  }
+  .hero h1 .slash{
+    display:inline-block; color:var(--red); -webkit-text-fill-color:var(--red);
+    transform: skewX(-10deg);
+  }
+  @keyframes sheen{ 0%,100%{ background-position:0% center;} 50%{ background-position:100% center;} }
+  .hero p.sub{
+    font-family:var(--font-body); color:var(--gray); max-width:620px; margin:22px auto 0;
+    font-size:1.05rem; line-height:1.6;
+    opacity:0; animation: fadeUp 0.8s ease forwards 0.45s;
+  }
+  .hero .meta-row{
+    margin-top:34px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+    opacity:0; animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+  .pill{
+    font-family:var(--font-mono); font-size:0.78rem; padding:7px 14px; border-radius:99px;
+    border:1px solid var(--line); color:var(--gray); background:rgba(255,255,255,0.02);
+  }
+  .pill b{ color:var(--white); }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+
+  .hero .katana-line{
+    position:absolute; top:50%; left:50%; width:1400px; height:2px;
+    background:linear-gradient(90deg, transparent, var(--teal), var(--red), transparent);
+    transform:translate(-50%,-50%) rotate(-6deg) scaleX(0);
+    transform-origin:center; opacity:0.5;
+    animation: swing 1.4s cubic-bezier(.16,1,.3,1) forwards 0.05s;
+  }
+  @keyframes swing{ to{ transform:translate(-50%,-50%) rotate(-6deg) scaleX(1); } }
+
+  /* ---------- section titles ---------- */
+  .section-title{
+    display:flex; align-items:baseline; gap:14px; margin:70px 0 26px;
+  }
+  .section-title h2{
+    font-family:var(--font-display); font-weight:400; font-size:1.9rem; letter-spacing:0.03em; margin:0;
+  }
+  .section-title .num{ font-family:var(--font-mono); color:var(--red); font-size:0.9rem; }
+  .section-title .line{ flex:1; height:1px; background:linear-gradient(90deg, var(--line), transparent); }
+
+  .callout{
+    border:1px solid var(--line); border-left:3px solid var(--teal);
+    background: linear-gradient(180deg, rgba(25,232,207,0.05), transparent);
+    border-radius:10px; padding:20px 22px; margin-bottom:14px;
+    font-size:0.92rem; color:var(--gray);
+  }
+  .callout b{ color:var(--white); }
+  .callout.warn{ border-left-color:var(--red); background: linear-gradient(180deg, rgba(255,59,78,0.06), transparent); }
+  .callout code{ font-family:var(--font-mono); color:var(--teal); background:rgba(25,232,207,0.08); padding:2px 6px; border-radius:4px; }
+
+  /* ---------- module cards ---------- */
+  .modules{ display:flex; flex-direction:column; gap:18px; margin-bottom:60px; }
+  .module{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 26px 22px;
+    opacity:0; transform:translateY(26px);
+    transition: transform 0.5s cubic-bezier(.16,1,.3,1), opacity 0.6s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+    overflow:hidden;
+  }
+  .module.in-view{ opacity:1; transform:translateY(0); }
+  .module::before{
+    content:''; position:absolute; top:0; left:0; width:4px; height:100%;
+    background:linear-gradient(180deg, var(--teal), var(--red));
+    transform:scaleY(0); transform-origin:top; transition:transform 0.5s cubic-bezier(.16,1,.3,1);
+  }
+  .module.in-view::before{ transform:scaleY(1); }
+  .module:hover{
+    background:var(--bg-card-hover);
+    border-color: rgba(25,232,207,0.35);
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(25,232,207,0.08) inset;
+  }
+  .module.continuous{ border-style:dashed; }
+  .module.done{
+    border-color: rgba(25,232,207,0.5);
+    box-shadow: 0 0 0 1px var(--teal-glow), 0 0 40px -10px var(--teal-glow);
+  }
+  .module.done::after{
+    content:'完了'; position:absolute; top:14px; right:18px;
+    font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.15em;
+    color:var(--teal); border:1px solid var(--teal-dim); padding:3px 9px; border-radius:99px;
+    background:rgba(25,232,207,0.08);
+  }
+
+  .module-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .module-title{ display:flex; align-items:center; gap:12px; }
+  .module-index{
+    font-family:var(--font-mono); color:var(--gray-dim); font-size:0.85rem; min-width:28px;
+  }
+  .module-title h3{ margin:0; font-family:var(--font-display); font-weight:400; font-size:1.5rem; letter-spacing:0.01em; }
+  .tag-continuous{
+    font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--red); border:1px solid var(--red-dim); padding:2px 8px; border-radius:99px; background:rgba(255,59,78,0.07);
+  }
+  .module-time{ font-family:var(--font-mono); font-size:0.8rem; color:var(--gray); white-space:nowrap; }
+
+  .skills{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px; }
+  .skill-tag{
+    font-family:var(--font-mono); font-size:0.72rem; color:var(--teal);
+    border:1px solid var(--teal-dim); background:rgba(25,232,207,0.06);
+    padding:4px 10px; border-radius:6px;
+  }
+
+  .module-meta{
+    display:grid; grid-template-columns: 1fr 1fr; gap:10px 24px;
+    font-size:0.88rem; color:var(--gray); margin-bottom:18px;
+    padding:14px 16px; background:rgba(255,255,255,0.02); border-radius:10px; border:1px solid var(--line);
+  }
+  .module-meta div b{ display:block; color:var(--gray-dim); font-family:var(--font-mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+  .cert-badge{ display:inline-flex; align-items:center; gap:6px; font-weight:600; }
+  .cert-badge.sim{ color:var(--teal); }
+  .cert-badge.nao{ color:var(--red); }
+  .cert-badge.condicional{ color:#ffb84d; }
+  .cert-badge .dot{ width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; }
+
+  .task-progress{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .task-progress .bar{ flex:1; height:5px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; }
+  .task-progress .bar i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--red)); transition:width 0.5s ease; }
+  .task-progress span{ font-family:var(--font-mono); font-size:0.72rem; color:var(--gray); }
+
+  .tasks{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .task{
+    display:flex; align-items:flex-start; gap:10px; cursor:pointer;
+    font-size:0.92rem; color:var(--gray); padding:8px 10px; border-radius:8px;
+    transition: background 0.25s ease, color 0.25s ease;
+    user-select:none;
+  }
+  .task:hover{ background:rgba(255,255,255,0.03); color:var(--white); }
+  .task input{ display:none; }
+  .task .box{
+    flex:none; width:18px; height:18px; margin-top:2px; border-radius:4px;
+    border:1.5px solid var(--gray-dim); position:relative; transition: all 0.25s ease;
+  }
+  .task .box::after{
+    content:''; position:absolute; inset:0; margin:auto; width:9px; height:5px;
+    border-left:2px solid var(--bg); border-bottom:2px solid var(--bg);
+    transform: rotate(-45deg) scale(0); transition: transform 0.2s ease 0.05s;
+  }
+  .task input:checked + .box{
+    background: linear-gradient(135deg, var(--teal), var(--red));
+    border-color: transparent;
+    box-shadow: 0 0 12px var(--teal-glow);
+  }
+  .task input:checked + .box::after{ transform: rotate(-45deg) scale(1); }
+  .task.checked{ color:var(--gray-dim); text-decoration: line-through; text-decoration-color: var(--red-dim); }
+
+  /* ---------- footer ---------- */
+  .footer{
+    text-align:center; padding:60px 24px 40px; color:var(--gray-dim);
+    font-family:var(--font-mono); font-size:0.78rem; position:relative; z-index:1;
+    border-top:1px solid var(--line); margin-top:40px;
+  }
+  .reset-btn{
+    font-family:var(--font-mono); font-size:0.75rem; color:var(--red);
+    background:transparent; border:1px solid var(--red-dim); padding:8px 16px;
+    border-radius:99px; cursor:pointer; margin-top:18px; transition: all 0.25s ease;
+  }
+  .reset-btn:hover{ background:rgba(255,59,78,0.1); box-shadow:0 0 20px var(--red-glow); }
+
+  @media (max-width: 640px){
+    .module-meta{ grid-template-columns:1fr; }
+    .progress-mini{ display:none; }
+    .hero{ padding:80px 0 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+<div class="bg-grid"></div>
+<div id="spirits"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="kanji">斬</span><span>GUIA://CLOUD</span><span class="kanji2">魂</span></div>
+    <div class="progress-mini">
+      <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+      <div class="progress-pct" id="topProgressPct">0%</div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="katana-line"></div>
+  <div class="wrap">
+    <div class="eyebrow">infra analyst → cloud analyst // roadmap de reiatsu</div>
+    <h1>BANKAI<span class="slash">.</span>CLOUD</h1>
+    <p class="sub">Roadmap revisado por um conselho técnico de 4 perspectivas independentes. Meta: núcleo empregável em <b style="color:var(--white)">10–14 meses</b>, sem carregar peso morto até o fim da lâmina.</p>
+    <div class="meta-row">
+      <span class="pill"><b>12</b> módulos</span>
+      <span class="pill"><b>2</b> trilhas contínuas</span>
+      <span class="pill">atualizado <b>26/08/2026</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="callout">
+    <b>Como usar:</b> marque cada tarefa conforme avança — o progresso fica salvo neste navegador. Módulos com borda tracejada e a tag <span style="color:var(--red)">CONTÍNUO</span> rodam em paralelo com tudo o resto, desde hoje.
+  </div>
+  <div class="callout warn">
+    <b>Regra de honestidade</b> (sugestão do Cético do conselho): toda sexta-feira, pergunte <code>isso gerou um artefato?</code> — um commit, um recurso provisionado, um lab documentado. Se não, não foi estudo — foi trabalho com nome bonito.
+  </div>
+
+  <div class="section-title"><span class="num">序</span><h2>Trilha de Estudos</h2><div class="line"></div></div>
+
+  <section class="modules" id="modules"></section>
+
+</main>
+
+<footer class="footer">
+  斬魄刀 — cada módulo concluído é um selo quebrado.<br>
+  Baseado na síntese de um Conselho Técnico de 4 agentes independentes avaliando o roadmap de transição Infra → Cloud.
+  <br>
+  <button class="reset-btn" id="resetBtn">Resetar progresso</button>
+</footer>
+
+<script>
+const MODULES = [
+  {
+    name: "Git & GitHub como hábito",
+    continuous: true,
+    skills: ["Versionamento", "Branch", "Commit", "Pull Request", ".gitignore"],
+    where: "GitHub Skills (gratuito, interativo)",
+    cert: "nao", certLabel: "Não aplicável",
+    time: "2-3 dias de base + uso diário",
+    tasks: [
+      "Fluxo básico: clone, add, commit, push, .gitignore",
+      "Branches e Pull Requests (abra PR e revise seu próprio diff)",
+      "Resolver um conflito de merge de propósito, num repo de teste",
+      "Regra adotada: todo lab a partir daqui vira commit público"
+    ]
+  },
+  {
+    name: "Linux essencial + Bash",
+    continuous: true,
+    skills: ["Shell", "Permissões", "systemd", "SSH", "Bash scripting"],
+    where: "Linux Journey · OverTheWire Bandit · WSL2 na prática",
+    cert: "nao", certLabel: "Não vale (ROI baixo p/ este objetivo)",
+    time: "60-80h ao longo de ~4 meses",
+    tasks: [
+      "Ambiente pronto: WSL2 + Ubuntu (ou VM própria)",
+      "Navegação, permissões, processos, systemd",
+      "Gerenciamento de pacotes (apt), SSH, variáveis de ambiente",
+      "Bash scripting básico — um script real de automação",
+      "Terminal padrão do dia a dia trocado para bash/WSL"
+    ]
+  },
+  {
+    name: "AZ-104 (finalizar)",
+    continuous: false,
+    skills: ["VMs", "VNet", "Storage", "RBAC", "Monitor", "Bicep básico"],
+    where: "Microsoft Learn (oficial) · canal John Savill (YouTube)",
+    cert: "sim", certLabel: "Sim — certificado-âncora do plano",
+    time: "6-10 semanas (restante)",
+    tasks: [
+      "Identity, governance, RBAC",
+      "Storage e Azure Files",
+      "Compute (VMs, escalonamento)",
+      "Virtual networking básico",
+      "Monitoramento básico e backup",
+      "Prova AZ-104 agendada e feita"
+    ]
+  },
+  {
+    name: "Terraform em Azure",
+    continuous: false,
+    skills: ["HCL", "Providers", "State remoto", "Módulos", "Plan/Apply"],
+    where: "HashiCorp Learn (tutoriais oficiais) · recriar labs do AZ-104",
+    cert: "condicional", certLabel: "Não por ora — portfólio pesa mais",
+    time: "3-4 semanas",
+    tasks: [
+      "HCL básico: providers, resources, variables, outputs",
+      "State remoto com locking (Azure Storage backend)",
+      "Recriar em Terraform 3+ recursos feitos clicando no AZ-104",
+      "Módulos reutilizáveis",
+      "Projeto público: mini ambiente (VNet + NSG + Key Vault + RBAC)"
+    ]
+  },
+  {
+    name: "CI/CD mínimo",
+    continuous: false,
+    skills: ["GitHub Actions", "OIDC", "Pipeline plan/apply"],
+    where: "Docs GitHub Actions · GitHub Skills \"Continuous Integration\"",
+    cert: "nao", certLabel: "Não existe cert de entrada relevante",
+    time: "1-2 semanas (junto ao módulo Terraform)",
+    tasks: [
+      "Pipeline: fmt + validate + plan no Pull Request",
+      "Apply automático no merge",
+      "Autenticação via OIDC (sem secret em texto puro)",
+      "README do repositório documentando o pipeline"
+    ]
+  },
+  {
+    name: "Rede em nuvem avançada",
+    continuous: false,
+    skills: ["VNet peering", "Hub-spoke", "VPN S2S", "DNS híbrido", "Private Endpoint"],
+    where: "Microsoft Learn (trilha AZ-700, sem prova)",
+    cert: "condicional", certLabel: "Estude o conteúdo, adie o exame",
+    time: "4-5 semanas",
+    tasks: [
+      "VNet peering e topologia hub-spoke",
+      "VPN Site-to-Site / ExpressRoute (conceito)",
+      "DNS híbrido e Private DNS Zones",
+      "Private Endpoint — por que o on-prem às vezes não resolve",
+      "Landing Zone / Cloud Adoption Framework — visão geral"
+    ]
+  },
+  {
+    name: "Governança, Backup e DR",
+    continuous: false,
+    skills: ["Management Groups", "Azure Policy", "Tags", "Backup", "Site Recovery", "RPO/RTO"],
+    where: "Microsoft Learn (módulos Governance e Business Continuity)",
+    cert: "nao", certLabel: "Coberto pelo AZ-104/AZ-305",
+    time: "2-3 semanas",
+    tasks: [
+      "Management Groups e estrutura de subscriptions",
+      "Azure Policy (audit/deny/deployIfNotExists) — não é GPO",
+      "Tagging e budget alerts na sua própria subscription de lab",
+      "Azure Backup e Site Recovery — RPO/RTO na prática"
+    ]
+  },
+  {
+    name: "Observabilidade e KQL",
+    continuous: false,
+    skills: ["Azure Monitor", "Log Analytics", "KQL", "Alert rules"],
+    where: "Microsoft Learn (\"KQL for Azure Monitor\") · docs do Kusto",
+    cert: "nao", certLabel: "Não existe cert de entrada específica",
+    time: "2-3 semanas",
+    tasks: [
+      "Azure Monitor e Log Analytics Workspace",
+      "KQL básico: where, summarize, join",
+      "Alert rules e Action Groups",
+      "Aplicar KQL em algo real: sign-in logs do Entra ID"
+    ]
+  },
+  {
+    name: "Docker + Kubernetes conceitual",
+    continuous: false,
+    skills: ["Imagens", "Containers", "Pods", "Deployments (conceito)"],
+    where: "Docker Curriculum (gratuito) · \"Kubernetes for Beginners\" (KodeKloud)",
+    cert: "nao", certLabel: "Não — CKA fica para quando o cargo exigir",
+    time: "2-3 semanas",
+    tasks: [
+      "Imagens, containers, Dockerfile básico",
+      "docker-compose para subir um app com 2 serviços",
+      "Conceitos de K8s: pods, deployments, services",
+      "AKS — visão geral de quando faz sentido usar"
+    ]
+  },
+  {
+    name: "Portfólio & Processo seletivo",
+    continuous: true,
+    skills: ["CV para cloud", "LinkedIn", "Repositórios públicos", "Entrevista"],
+    where: "GitHub (seus próprios repositórios) · LinkedIn Learning",
+    cert: "nao", certLabel: "Não aplicável",
+    time: "Contínuo, a partir do mês 4-5",
+    tasks: [
+      "CV reescrito com linguagem de cloud",
+      "LinkedIn atualizado",
+      "2+ repositórios públicos com README e diagrama",
+      "Primeira leva de candidaturas enviada",
+      "Simulado de entrevista técnica feito"
+    ]
+  },
+  {
+    name: "AWS — mapeamento conceitual",
+    continuous: false,
+    skills: ["IAM vs Entra", "VPC vs VNet", "EC2/S3/RDS vs VM/Blob/SQL"],
+    where: "AWS Skill Builder (módulos gratuitos de fundamentos)",
+    cert: "condicional", certLabel: "Só se vagas da sua região pedirem",
+    time: "2 semanas de mapeamento; SAA-C03 pós-contratação",
+    tasks: [
+      "IAM vs Entra ID",
+      "VPC vs VNet, Security Groups vs NSG",
+      "EC2/S3/RDS vs VM/Blob Storage/Azure SQL",
+      "Pesquisa: 30-40 vagas reais tabuladas por palavra-chave",
+      "Decisão registrada: SAA-C03 vale a pena p/ seu mercado?"
+    ]
+  },
+  {
+    name: "SC-300 (opcional)",
+    continuous: false,
+    skills: ["Identity governance", "Conditional Access avançado", "PIM"],
+    where: "Microsoft Learn (trilha SC-300)",
+    cert: "condicional", certLabel: "Só se mirar trilha de Identidade/IAM",
+    time: "6-8 semanas, se optar por ela",
+    tasks: [
+      "Decisão consciente: quero mirar identidade/IAM como trilha?",
+      "Se sim: Identity governance, Conditional Access avançado, PIM",
+      "Se sim: prova SC-300 agendada"
+    ]
+  }
+];
+
+const CERT_LABELS = { sim: "SIM", nao: "NÃO", condicional: "COND." };
+const modulesEl = document.getElementById('modules');
+
+function taskKey(mi, ti){ return `cloudguide_m${mi}_t${ti}`; }
+
+MODULES.forEach((m, mi) => {
+  const card = document.createElement('article');
+  card.className = 'module' + (m.continuous ? ' continuous' : '');
+  card.dataset.index = mi;
+
+  const certClass = m.cert;
+  const certText = CERT_LABELS[m.cert] || '';
+
+  card.innerHTML = `
+    <div class="module-head">
+      <div class="module-title">
+        <span class="module-index">${String(mi+1).padStart(2,'0')}</span>
+        <h3>${m.name}</h3>
+        ${m.continuous ? '<span class="tag-continuous">contínuo</span>' : ''}
+      </div>
+      <div class="module-time">${m.time}</div>
+    </div>
+    <div class="skills">${m.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
+    <div class="module-meta">
+      <div><b>Onde estudar</b>${m.where}</div>
+      <div><b>Vale certificação?</b><span class="cert-badge ${certClass}"><span class="dot"></span>${certText} — ${m.certLabel}</span></div>
+    </div>
+    <div class="task-progress">
+      <div class="bar"><i></i></div>
+      <span class="ratio">0/${m.tasks.length}</span>
+    </div>
+    <ul class="tasks">
+      ${m.tasks.map((t, ti) => `
+        <li class="task" data-mi="${mi}" data-ti="${ti}">
+          <input type="checkbox" id="${taskKey(mi,ti)}">
+          <span class="box"></span>
+          <span class="label">${t}</span>
+        </li>`).join('')}
+    </ul>
+  `;
+  modulesEl.appendChild(card);
+});
+
+function updateModule(mi){
+  const card = document.querySelector(`.module[data-index="${mi}"]`);
+  const tasks = card.querySelectorAll('.task');
+  let done = 0;
+  tasks.forEach(t => {
+    const cb = t.querySelector('input');
+    if (localStorage.getItem(taskKey(mi, t.dataset.ti)) === '1'){
+      cb.checked = true; t.classList.add('checked');
+      done++;
+    } else {
+      cb.checked = false; t.classList.remove('checked');
+    }
+  });
+  const pct = Math.round((done / tasks.length) * 100);
+  card.querySelector('.task-progress .bar i').style.width = pct + '%';
+  card.querySelector('.task-progress .ratio').textContent = `${done}/${tasks.length}`;
+  card.classList.toggle('done', done === tasks.length);
+}
+
+function updateAll(){
+  MODULES.forEach((_, mi) => updateModule(mi));
+  let totalDone = 0, totalTasks = 0;
+  MODULES.forEach((m, mi) => {
+    m.tasks.forEach((_, ti) => {
+      totalTasks++;
+      if (localStorage.getItem(taskKey(mi, ti)) === '1') totalDone++;
+    });
+  });
+  const pct = totalTasks ? Math.round((totalDone/totalTasks)*100) : 0;
+  document.getElementById('topProgress').style.width = pct + '%';
+  document.getElementById('topProgressPct').textContent = pct + '%';
+}
+
+modulesEl.addEventListener('click', (e) => {
+  const li = e.target.closest('.task');
+  if (!li) return;
+  const mi = li.dataset.mi, ti = li.dataset.ti;
+  const key = taskKey(mi, ti);
+  const current = localStorage.getItem(key) === '1';
+  localStorage.setItem(key, current ? '0' : '1');
+  updateModule(Number(mi));
+  updateAll();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('Resetar todo o progresso salvo neste navegador?')) return;
+  Object.keys(localStorage).filter(k => k.startsWith('cloudguide_')).forEach(k => localStorage.removeItem(k));
+  updateAll();
+});
+
+updateAll();
+
+// scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.module').forEach(el => io.observe(el));
+
+// floating spirit particles
+const spiritsEl = document.getElementById('spirits');
+const colors = ['rgba(25,232,207,0.7)', 'rgba(255,59,78,0.6)'];
+for (let i = 0; i < 22; i++){
+  const s = document.createElement('div');
+  s.className = 'spirit';
+  const size = 2 + Math.random() * 4;
+  s.style.width = size + 'px';
+  s.style.height = size + 'px';
+  s.style.left = Math.random() * 100 + 'vw';
+  s.style.bottom = '-10px';
+  s.style.background = colors[i % 2];
+  s.style.boxShadow = `0 0 ${size*3}px ${colors[i % 2]}`;
+  s.style.animationDuration = (10 + Math.random() * 14) + 's';
+  s.style.animationDelay = (Math.random() * 12) + 's';
+  spiritsEl.appendChild(s);
+}
+</script>
+
+</body>
+</html>
